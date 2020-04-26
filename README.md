@@ -45,6 +45,9 @@ ffmpeg -f concat -i f.txt -c copy -y full.mp4
 将缺失文件定义到m3u8index.html中的 check_list_cb函数中filelist，再下载一次缺失文件就可以。  
 
 ## 编译方法：
-npm install  
-npm run build  
+cnpm install  
+cnpm run build  
 
+## 参数调整
+m3u8index.html中options.maxthreadcount并行几个xhr同时下载ts文件。默认为5。
+writetimeout为写入文件的定时器间隔，默认200毫秒。如果机器慢文件大这个值调大。

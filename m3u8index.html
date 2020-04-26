@@ -1,0 +1,86 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>m3u8下载</title>
+</head>
+<body>
+
+<!--
+极限逃生
+https://www.juji.tv/dianying/jixiantaoshengEXIT/play-5329-0-1.html
+https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
+-->
+
+<input id="input_url" type="text" value="https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8"
+    style="display: block;width: 600px">
+<button id="btn_start">下载</button>
+<p id="runstatus"></p>
+<a id="a_blob" href=""></a>
+
+<script src="dist/mym3u8.js" ></script>
+<script>
+    window.onload=function () {
+        var btn_start=document.getElementById("btn_start");
+        btn_start.onclick=function () {
+            var input_url=document.getElementById('input_url');
+            var targeturl=input_url.value;
+            var mym3u8 = window.mym3u8;
+
+            var options={
+                maxthreadcount: 5,
+                writetimeout: 200
+            };
+
+            var callback=function(msg){
+                 var runstatus = document.getElementById('runstatus');
+                 runstatus.innerHTML = `<span>${msg}</span>`;
+            }
+            mym3u8(targeturl,options,check_list_cb,callback);
+
+        }
+    };
+
+    function empty_cb(filename ) {
+        return true;
+    }
+
+
+    function check_list_cb(filename) {
+        /*
+        var filelist={
+'url_522_193039199_mp4_h264_aac_hd_7.ts': true,
+'url_523_193039199_mp4_h264_aac_hd_7.ts': true,
+'url_524_193039199_mp4_h264_aac_hd_7.ts': true,
+'url_525_193039199_mp4_h264_aac_hd_7.ts': true
+        };*/
+
+
+        if(typeof filelist === 'undefined'){
+            return true;
+        }
+        filename=filename.replace(/[\/]/g,'_');
+        return filelist[filename];
+    }
+
+    function check_fileno_cb(filename) {
+
+        if(filename.indexOf('raw')<0){
+            return false;
+        }
+
+        //return true;
+        var p1 = filename.lastIndexOf('/');
+        var p2 = filename.lastIndexOf('/',p1-1);
+        var n = Number(filename.substring(p2+1,p1));
+        if(n<=5910){
+            return false;
+        }
+        console.log(`filter pass filename ${filename}`);
+        return true;
+    }
+
+</script>
+
+
+</body>
+</html>
