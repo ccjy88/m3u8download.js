@@ -20,10 +20,23 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
 <script src="dist/mym3u8.js" ></script>
 <script>
     window.onload=function () {
+        var input_url=document.getElementById('input_url');
         var btn_start=document.getElementById("btn_start");
+        var localMsg;
+        if(window.localStorage.formHistory){
+            localMsg=JSON.parse(window.localStorage.formHistory);
+        }
+        if(localMsg && localMsg.length>=1){
+            input_url.value = localMsg[0].targeturl;
+        }
+
         btn_start.onclick=function () {
-            var input_url=document.getElementById('input_url');
             var targeturl=input_url.value;
+            var history=[];
+            window.localStorage.formHistory='';
+            history.push({"targeturl": targeturl});
+            window.localStorage.formHistory=JSON.stringify(history);
+
             var mym3u8 = window.mym3u8;
 
             var options={
@@ -46,14 +59,11 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
 
 
     function check_list_cb(filename) {
-        /*
+/*
         var filelist={
-'url_522_193039199_mp4_h264_aac_hd_7.ts': true,
-'url_523_193039199_mp4_h264_aac_hd_7.ts': true,
-'url_524_193039199_mp4_h264_aac_hd_7.ts': true,
-'url_525_193039199_mp4_h264_aac_hd_7.ts': true
-        };*/
-
+'1111.ts': true,
+        };
+*/
 
         if(typeof filelist === 'undefined'){
             return true;
