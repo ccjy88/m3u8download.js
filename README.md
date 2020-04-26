@@ -26,8 +26,8 @@ xcopy /E /Y dist D:\nginx-1.18.0\html\dist
 
 启动nginx,用chrome访问http://127.0.0.1/m3u8index.html， 在URL地址输入相关的m3u8地址。
 比如搜到电影《极限逃生》，在Chrome浏览器中按F12，看Network中m3u8URL是
-https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8，复制到m3u8index.html
-页面，点击"下载"钮就可以。
+https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8，
+把这个地址复制到m3u8index.html页面中，点击"下载"钮就可以。
 
 ##chrome浏览器配置
 下载目录设置：chrome://settings/downloads  比如为d:\downloads
