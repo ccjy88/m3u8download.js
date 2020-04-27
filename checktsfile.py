@@ -10,7 +10,7 @@ if __name__ == '__main__':
       for filename in filenames:
          path = dir+filename
          if os.path.exists(path) is False:
-            print("'{}': true,".format(filename))
+            print("{}".format(filename))
    print('finished check')
 
 
