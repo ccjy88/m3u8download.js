@@ -11,11 +11,18 @@ https://www.juji.tv/dianying/jixiantaoshengEXIT/play-5329-0-1.html
 https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
 -->
 
-<input id="input_url" type="text" value="https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8"
+<input id="input_url" type="text" value="https://"
     style="display: block;width: 600px">
 <button id="btn_start">下载</button>
 <p id="runstatus"></p>
-<a id="a_blob" href=""></a>
+<div class="div_filter">
+    文件名过滤(包含)
+    <textarea id="text_filter" style="display: inline-block;width: 30em;height: 20em"></textarea>
+    文件名不含
+    <input type="text" id="text_notcontent" style="display: inline-block;width: 30em;height: 1.5em">
+
+</div>
+
 
 <script src="dist/mym3u8.js" ></script>
 <script>
@@ -28,6 +35,12 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
         }
         if(localMsg && localMsg.length>=1){
             input_url.value = localMsg[0].targeturl;
+            if(localMsg.length>1){
+                document.getElementById('text_filter').value = localMsg[1].text_filter;
+            }
+            if(localMsg.length>2){
+                document.getElementById('text_notcontent').value = localMsg[2].text_notcontent;
+            }
         }
 
         btn_start.onclick=function () {
@@ -35,6 +48,10 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
             var history=[];
             window.localStorage.formHistory='';
             history.push({"targeturl": targeturl});
+            var text_filter = document.getElementById('text_filter').value;
+            history.push({"text_filter": text_filter});
+            var text_notcontent = document.getElementById('text_notcontent').value;
+            history.push({"text_notcontent": text_notcontent});
             window.localStorage.formHistory=JSON.stringify(history);
 
             var mym3u8 = window.mym3u8;
@@ -44,50 +61,41 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
                 writetimeout: 200
             };
 
+            var filter = document.getElementById('text_filter').value;
+            var filters = filter.split('\n');
+            filters.forEach(x=>x.trim());
+
+            var text_notcontent = document.getElementById('text_notcontent').value.trim();
+
+            var filenamefilter=function (filename) {
+                if(text_notcontent.length>0){
+                    if(filename.indexOf(text_notcontent)>=0){
+                        return false;
+                    }
+                }
+                if(!filters || filters.length==0){
+                    return true;
+                }
+                filename=filename.replace(/[\/]/g,'_');
+                var i;
+                for(i=0;i<filters.length;i++){
+                    if(filename.indexOf(filters[i])>=0){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
             var callback=function(msg){
                  var runstatus = document.getElementById('runstatus');
                  runstatus.innerHTML = `<span>${msg}</span>`;
             }
-            mym3u8(targeturl,options,check_list_cb,callback);
+            mym3u8(targeturl,options,filenamefilter,callback);
 
         }
     };
 
-    function empty_cb(filename ) {
-        return true;
-    }
 
-
-    function check_list_cb(filename) {
-/*
-        var filelist={
-'1111.ts': true,
-        };
-*/
-
-        if(typeof filelist === 'undefined'){
-            return true;
-        }
-        filename=filename.replace(/[\/]/g,'_');
-        return filelist[filename];
-    }
-
-    function check_fileno_cb(filename) {
-
-        if(filename.indexOf('raw')<0){
-            return false;
-        }
-
-        //return true;
-        var p1 = filename.lastIndexOf('/');
-        var p2 = filename.lastIndexOf('/',p1-1);
-        var n = Number(filename.substring(p2+1,p1));
-        if(n<=5910){
-            return false;
-        }
-        console.log(`filter pass filename ${filename}`);
-        return true;
-    }
 
 </script>
 
