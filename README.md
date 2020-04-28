@@ -42,7 +42,7 @@ ffmpeg -f concat -i f.txt -c copy -y full.mp4
 
 ## 错误处理
 如果下载过程中f.txt文件中有而实际下载失败，可以运行python checktsfile.py   
-将缺失文件定义到m3u8index.html中的 check_list_cb函数中filelist，再下载一次缺失文件就可以。  
+将缺失文件一行一个复制到文本框“文件名过滤"，再重新下载，只下载匹配文件名成功的文件。
 
 ## 编译方法：
 cnpm install  
