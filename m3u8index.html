@@ -100,6 +100,9 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
                 filename=filename.replace(/[\/]/g,'_');
                 var i;
                 for(i=0;i<filters.length;i++){
+                    if(filters[i].length===0){
+                        continue;
+                    }
                     if(filename.indexOf(filters[i])>=0){
                         return true;
                     }
