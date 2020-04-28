@@ -11,23 +11,25 @@ https://www.juji.tv/dianying/jixiantaoshengEXIT/play-5329-0-1.html
 https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
 -->
 
-<input id="input_url" type="text" value="https://"
-    style="display: block;width: 600px">
-<button id="btn_start">下载</button>
 <p id="runstatus"></p>
 <div class="div_filter">
     <table>
         <tr>
+            <td>m3u8 URL</td>
+            <td><input id="input_url" type="text" value="https://"    style="display: block;width: 40em"></td>
+        </tr>
+        <tr>
             <td>文件名过滤(包含)</td>
-            <td><textarea id="text_filter" style="display: inline-block;width: 30em;height: 20em"></textarea></td>
+            <td><textarea id="text_filter" style="display: inline-block;width: 40em;height: 15em"></textarea></td>
         </tr>
         <tr>
             <td>文件名不含</td>
-            <td><input type="text" id="text_notcontent" style="display: inline-block;width: 30em;height: 1.5em"></td>
+            <td><input type="text" id="text_notcontent" style="display: inline-block;width: 40em;height: 1.5em"></td>
         </tr>
-
         <tr>
-            <td colspan="2">ffmpeg -f concat -i f.txt -c copy -y out.mp4</td>
+            <td colspan="2" align="center"><button id="btn_start">开始下载</button></td>
+        <tr>
+        <td colspan="2"><li>合成命令 ffmpeg -f concat -i f.txt -c copy -y out.mp4</li></td>
         </tr>
     </table>
 
