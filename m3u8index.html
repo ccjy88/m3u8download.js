@@ -16,10 +16,24 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
 <button id="btn_start">下载</button>
 <p id="runstatus"></p>
 <div class="div_filter">
-    文件名过滤(包含)
-    <textarea id="text_filter" style="display: inline-block;width: 30em;height: 20em"></textarea>
-    文件名不含
-    <input type="text" id="text_notcontent" style="display: inline-block;width: 30em;height: 1.5em">
+    <table>
+        <tr>
+            <td>文件名过滤(包含)</td>
+            <td><textarea id="text_filter" style="display: inline-block;width: 30em;height: 20em"></textarea></td>
+        </tr>
+        <tr>
+            <td>文件名不含</td>
+            <td><input type="text" id="text_notcontent" style="display: inline-block;width: 30em;height: 1.5em"></td>
+        </tr>
+
+        <tr>
+            <td colspan="2">ffmpeg -f concat -i f.txt -c copy -y out.mp4</td>
+        </tr>
+    </table>
+
+
+
+
 
 </div>
 
