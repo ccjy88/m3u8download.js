@@ -77,7 +77,7 @@ export default class Tsdownloader {
 
         } else {
             var p = url.lastIndexOf('/') + 1;
-            newkeyurl = url.substring(0, p) + keyuri;
+            newkeyurl = url.substring(0, p) + keyurl;
         }
       keyurl = newkeyurl;
       console.log(`start download key ${keyurl}`)
