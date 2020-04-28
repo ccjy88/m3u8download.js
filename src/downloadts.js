@@ -55,20 +55,31 @@ export default class Tsdownloader {
 
   downloadKey(target){
     return new Promise(function (resolve,reject) {
-      if(!target.key){
-        resolve('not need key');
-        return;
-      }
+        if (!target.key) {
+            resolve('not need key');
+            return;
+        }
 
-      if(this.keysaved){
-          resolve(this.keysaved);
-          return;
-      }
+        if (this.keysaved) {
+            resolve(this.keysaved);
+            return;
+        }
 
-      var url=target.url;
-      var key=target.key;
-      var p=url.lastIndexOf('/')+1;
-      var keyurl=url.substring(0,p)+key.uri;
+        var url = target.url;
+        var key = target.key;
+        var keyurl=key.uri;
+        var newkeyurl='';
+
+        if (keyurl.startsWith('/')) {
+           var p=url.indexOf('://');
+           var p1=url.indexOf('/',p+3)
+           newkeyurl = url.substring(0, p1) + keyurl;
+
+        } else {
+            var p = url.lastIndexOf('/') + 1;
+            newkeyurl = url.substring(0, p) + keyuri;
+        }
+      keyurl = newkeyurl;
       console.log(`start download key ${keyurl}`)
 
 
