@@ -85,10 +85,10 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
             var filter = document.getElementById('text_filter').value;
             var filters=[];
             var ss = filter.split('\n');
-            filters.forEach(x=>{
+            ss.forEach(x=>{
                 x = x.trim();
                 if(x.length>0){
-                    filters.pusH(x);
+                    filters.push(x);
                 }
             });
 
