@@ -27,7 +27,10 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
             <td><input type="text" id="text_notcontent" style="display: inline-block;width: 40em;height: 1.5em"></td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><button id="btn_start">开始下载</button></td>
+            <td colspan="2" align="center">
+                <button id="btn_start">开始下载</button>
+                <button id="btn_clean">清除</button>
+            </td>
         </tr>
         <tr>
             <td colspan="2" align="center"><p id="runstatus"></p></button></td>
@@ -120,9 +123,18 @@ https://dbx5.tyswmp.com/20190910/oKHsD3EG/900kb/hls/index.m3u8
             var callback=function(msg){
                  var runstatus = document.getElementById('runstatus');
                  runstatus.innerHTML = `<span>${msg}</span>`;
+                 if(msg.indexOf('完成')>=0){
+                     btn_start.disabled=false;
+                 }
             }
             mym3u8(targeturl,options,filenamefilter,callback);
+            btn_start.disabled=true;
+        }
 
+        var btn_clean = document.getElementById('btn_clean');
+        btn_clean.onclick=function (e) {
+            document.getElementById('text_filter').value='';
+            document.getElementById('text_notcontent').value='';
         }
     };
 
