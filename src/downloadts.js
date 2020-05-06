@@ -10,6 +10,7 @@ export default class Tsdownloader {
     this.keysaved=null;
     this.callback=callback;
     this.workers=new Array();
+    this.finishedcount=0;
 
     this.maxthreadcount=options.maxthreadcount;
     this.writetimeout=options.writetimeout;
@@ -40,9 +41,12 @@ export default class Tsdownloader {
       if(this.targets.length ==0){
           return;
       }
+     this.finishedcount=0;
+     this.callback(`开始`);
      return new Promise(function (resolve,reject) {
           this.downloadKey(this.targets[0]).then(
               function (keystr) {
+                  this.callback(`已获得key`);
                   this.keystr=keystr;
                   setTimeout(function (){
                       this.downloadDispather();
@@ -148,16 +152,25 @@ export default class Tsdownloader {
           return;
       }
 
+
      if (!target.key || !target.key.uri) {
          this.downloadBlob(worker,result, target.filename);
-         this.callback(`已下载${target.filename}`);
+         this.finishedcount++;
+         var percent=this.finishedcount*100/this.targets.length;
+         var spercent=percent.toString().substring(0,5);
+         this.callback(`已下载${target.filename} ${spercent}%`);
          return;
      }
      this.decryptTS(this.keystr, result).then(function (decrptdata) {
          this.downloadBlob(worker,decrptdata, target.filename);
-         this.callback(`已下载${target.filename}`);
+         this.finishedcount++;
+         var percent=this.finishedcount*100/this.targets.length;
+         var spercent=percent.toString().substring(0,5);
+         this.callback(`已下载${target.filename} ${spercent}%`);
          return;
      }.bind(this));
+
+
   }
 
 
